@@ -1,0 +1,6 @@
+{
+  "name": "FinAI Coach",
+  "description": "An intelligent personal finance architecture featuring behavioral prediction, ML forecasting, and interactive financial simulations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["AI Financial Analysis", "Predictive Forecasting", "Behavioral Modeling"]
+}

@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Core user information and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "onboarded": { "type": "boolean" },
+        "riskTolerance": { "type": "string", "enum": ["low", "medium", "high"] }
+      },
+      "required": ["uid", "email"]
+    },
+    "Account": {
+      "title": "Financial Account",
+      "description": "Connected bank, credit card, or investment account",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["checking", "savings", "credit_card", "investment", "loan"] },
+        "balance": { "type": "number" },
+        "currency": { "type": "string" },
+        "institution": { "type": "string" },
+        "lastSynced": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "type", "balance"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial transaction record",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "accountId": { "type": "string" },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "isRecurring": { "type": "boolean" },
+        "pending": { "type": "boolean" }
+      },
+      "required": ["userId", "accountId", "amount", "date", "description"]
+    },
+    "FinancialGoal": {
+      "title": "Financial Goal",
+      "description": "Savings or investment goal",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "currentAmount": { "type": "number" },
+        "deadline": { "type": "string", "format": "date-time" },
+        "category": { "type": "string" }
+      },
+      "required": ["userId", "name", "targetAmount", "currentAmount"]
+    },
+    "BehavioralProfile": {
+      "title": "Behavioral Profile",
+      "description": "AI-generated profile based on spending habits",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "cluster": { "type": "string" },
+        "riskScore": { "type": "number" },
+        "topInsights": { "type": "array", "items": { "type": "string" } },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "cluster"]
+    },
+    "Forecast": {
+      "title": "Financial Forecast",
+      "description": "Predicted future balances and cash flow",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "projectionDate": { "type": "string", "format": "date" },
+        "predictedBalance": { "type": "number" },
+        "confidence": { "type": "number" }
+      },
+      "required": ["userId", "projectionDate", "predictedBalance"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User document"
+    },
+    "/users/{userId}/accounts/{accountId}": {
+      "schema": "Account",
+      "description": "User's connected accounts"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "User's transactions"
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": "FinancialGoal",
+      "description": "User's savings goals"
+    },
+    "/users/{userId}/behavioral_profile/main": {
+      "schema": "BehavioralProfile",
+      "description": "User's behavioral modeling data"
+    },
+    "/users/{userId}/forecasts/{forecastId}": {
+      "schema": "Forecast",
+      "description": "AI projections"
+    }
+  }
+}
